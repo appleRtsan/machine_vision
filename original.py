@@ -2,8 +2,10 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 
-img1 = cv2.imread('dumptruck1_360x270.bmp')
-img2 = cv2.imread('dumptruck2_360x270.bmp')
+# img1 = cv2.imread('dumptruck1_360x270.bmp')
+# img2 = cv2.imread('dumptruck2_360x270.bmp')
+img1 = cv2.imread('basketball1_360x270.bmp')
+img2 = cv2.imread('basketball2_360x270.bmp')
 gray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
 gray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 # calculate optical flow
