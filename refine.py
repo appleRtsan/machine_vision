@@ -1,6 +1,9 @@
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
+import math
+
+
 
 # img1 = cv2.imread('dumptruck1_360x270.bmp')
 # img2 = cv2.imread('dumptruck2_360x270.bmp')
@@ -71,8 +74,8 @@ finalr = cv2.hconcat([eight_bit_img1,seven_bit_img1,six_bit_img,five_bit_img])
 finalv =cv2.hconcat([four_bit_img,three_bit_img,two_bit_img,one_bit_img])
 bruh = cv2.hconcat([seven_bit_img1,seven_bit_img2])
 bruh_8 = cv2.hconcat([eight_bit_img1,eight_bit_img2])
-cv2.imwrite('7_slicing.bmp',bruh)
-cv2.imwrite('8_slicing.bmp',bruh_8)
+# cv2.imwrite('7_slicing.bmp',bruh)
+# cv2.imwrite('8_slicing.bmp',bruh_8)
 # Vertically concatenate
 final = cv2.vconcat([finalr,finalv])
 # cv2.imshow('oo',final)
@@ -85,9 +88,13 @@ final = cv2.vconcat([finalr,finalv])
 #                       Optical Flow                            #
 #                                                               #
 #################################################################
+flow2 = cv2.calcOpticalFlowFarneback(gray1, gray2, None, 0.5, 3, 15, 3, 5, 1.2, 0)
 flow = cv2.calcOpticalFlowFarneback(seven_bit_img1, seven_bit_img2, None, 0.5, 3, 15, 3, 5, 1.2, 0)
-                                      
+
+mag2, ang2 = cv2.cartToPolar(flow2[..., 0], flow2[..., 1])
 mag, ang = cv2.cartToPolar(flow[..., 0], flow[..., 1])
+
+
 hsv = np.zeros_like(img1)
 hsv[..., 1] = 255
 hsv[..., 0] = ang*180/np.pi/2
@@ -95,6 +102,19 @@ hsv[..., 2] = cv2.normalize(mag, None, 0, 255, cv2.NORM_MINMAX)
 bgr = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
 
 step = 9
-plt.quiver(np.arange(0, flow.shape[1], step), np.arange(flow.shape[0], 0, -step), 
-           flow[::step, ::step, 0], flow[::step, ::step, 1])
+# plt.quiver(np.arange(0, flow.shape[1], step), np.arange(flow.shape[0], 0, -step), 
+        #    flow[::step, ::step, 0], flow[::step, ::step, 1])
+# plt.show()
+
+#################################################################
+#                                                               #                
+#                        Analysis                               #
+#                                                               #
+#################################################################
+
+
+plt.scatter(ang2*180/math.pi, mag2, color = 'black', alpha= 0.01)
+plt.scatter(ang*180/math.pi, mag, color = 'cyan', alpha= 0.01)
 plt.show()
+
+
