@@ -2,10 +2,10 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 
-# img1 = cv2.imread('dumptruck1_360x270.bmp')
-# img2 = cv2.imread('dumptruck2_360x270.bmp')
-img1 = cv2.imread('basketball1_360x270.bmp')
-img2 = cv2.imread('basketball2_360x270.bmp')
+img1 = cv2.imread('dumptruck1_360x270.bmp')
+img2 = cv2.imread('dumptruck2_360x270.bmp')
+# img1 = cv2.imread('basketball1_360x270.bmp')
+# img2 = cv2.imread('basketball2_360x270.bmp')
 gray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
 gray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 # calculate optical flow
@@ -19,6 +19,7 @@ hsv[..., 2] = cv2.normalize(mag, None, 0, 255, cv2.NORM_MINMAX)
 bgr = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
 
 step = 9
-plt.quiver(np.arange(0, flow.shape[1], step), np.arange(flow.shape[0], 0, -step), 
-           flow[::step, ::step, 0], flow[::step, ::step, 1])
+plt.imshow(img2)
+plt.quiver(np.arange(0, flow.shape[1], step), np.arange( 0,flow.shape[0], step), 
+           flow[::step, ::step, 0], flow[::step, ::step, 1], color = "b")
 plt.show()
